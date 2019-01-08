@@ -373,7 +373,7 @@ Message makeCallMsg = new Message();
     //isIncomingCall = true;
 selectedUserTopic.getMessages().add(makeCallMsg);
 	
-	//System.out.println("msg id:"+msg.getUsermsgID());
+	
 
 	messageService.saveUserChatUsingTopic(selectedUserTopic);
 	//updateOpenChats();
