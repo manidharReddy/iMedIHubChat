@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.chat.pojo.User" table="users">
+	
+		<id name="userId" column="userid" >
+		<generator class="increment"></generator>
+		</id>
+		<property name="username" 	column="username" 	/>
+		<property name="password" 	column="password" 	/>
+		<!-- <property name="lastlogin" column="lastlogin" 	/> -->
+		<property name="active" 	column="isActive" />
+		<!-- <property name="creation" 	column="creation" /> -->
+		<!-- <property name="update" 	column="update" /> -->
+		
+		
+		<many-to-one name="userregistration" class="com.chat.pojo.UserRegistration" column="userregid" cascade="all" not-null="true" unique="true" fetch="join" lazy="proxy"/>
+		<many-to-one name="usertype" class="com.chat.pojo.UserType" column="usertypeid" cascade="all" not-null="true" unique="true" fetch="join" lazy="proxy" />
+		<many-to-one name="usraddr" class="com.chat.pojo.UserAddress" column="useraddress" cascade="all" not-null="true" unique="true" fetch="join" lazy="proxy" />		
+		
+	</class>	
+	
+	
+		
+	<class name="com.chat.pojo.UserType" table="userType">
+		<id name="usertypeid" column="usertypeid">
+			<generator class="increment"></generator>
+		</id>
+		<property name="usertypename" column="usertypename" />
+		
+	</class>
+	
+	<class name="com.chat.pojo.UserRegistration" table="userRegistration">
+	
+		<id name="userregid" column="userregid" >
+		<generator class="increment"></generator>
+		</id>
+		<property name="userfirstname" 	column="userfirstname" 	/>
+		<property name="userlastname" 	column="userlastname" 	/>
+		<property name="useremailid" column="useremailid" 	/>
+		<property name="usermobilenumber" 	column="usermobilenumber" />
+		
+		
+		<!-- <property name="creation" 	column="creation" /> -->
+		<!-- <property name="update" 	column="update" /> -->
+		
+		
+		
+	</class>
+	
+	<class name="com.chat.pojo.UserAddress" table="userAddress">
+	
+		<id name="useraddrid" column="useraddrid" >
+		<generator class="increment"></generator>
+		</id>
+		<property name="buildingno" 	column="building_no" 	/>
+		<property name="streetname" 	column="street_name" 	/>
+		<property name="city" column="city" 	/>
+		<property name="district" 	column="district" />
+		
+		
+		<property name="state" 	column="state" />
+		<property name="country" 	column="country" />
+		
+		
+		
+	</class>	
+	
+	<class name="com.chat.pojo.UserTopic" table="userTopicNames">
+		<id name="topicid" column="usertopicid">
+			<generator class="increment"></generator>
+		</id>
+		<set name="messages" cascade="all">
+			<key column="usertopicid"/>
+				
+			<one-to-many class="com.chat.pojo.Message"/>
+		</set>
+		
+		<property name="topicname" column="usertopicname" />
+		<many-to-one name="loggedUser" class="com.chat.pojo.User" column="userid" cascade="all" not-null="true" unique="true" fetch="join" lazy="proxy"/>
+		<many-to-one name="chatUser" class="com.chat.pojo.User" column="useridrefered" cascade="all" not-null="true" unique="true" fetch="join" lazy="proxy" />
+		
+	</class>
+	
+	<class name="com.chat.pojo.Message" table="userMessages">
+	
+		<id name="usermsgID" column="usermsgid" >
+		<generator class="increment"></generator>
+		</id>
+		<property name="content" 	column="usermsg" 	/>
+		<property name="msgId" 	column="usermsgmqttid" 	/>
+		<property name="messageType" column="usermsgtype" 	/>
+		<property name="toUserId" 	column="touserid" />
+		<property name="fromUserId" 	column="fromuserid" />
+		<property name="username" 	column="username" />
+		<property name="createdOn" 	column="createdOn" 	/>
+		<property name="msgDate" 	column="msgTime" />
+		<property name="topicName" 	column="usertopicname" />
+		
+		
+		
+		
+	</class>	
+	
+</hibernate-mapping>

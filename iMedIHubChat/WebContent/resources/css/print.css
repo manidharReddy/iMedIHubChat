@@ -1,0 +1,9 @@
+.barcodeCss{position: relative;top: -55px; }
+.barcodeHeight{height: 45px;overflow: hidden;}
+.barcodetext{font-size: 7pt;font-weight: bold;}
+.clearBoth{ page-break-after: auto;height: 50%;font-family: Arial, Helvetica, sans-serif; }
+
+.barcodeCss{position: relative;top: -60px; }
+.barcodeHeight{height: 45px;overflow: hidden;}
+.barcodetext{font-size: 8pt;font-weight: bold;}
+.clearBoth{ page-break-after: auto;height: 50%;font-family: Arial, Helvetica, sans-serif;'}

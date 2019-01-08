@@ -1,0 +1,168 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<f:view contentType="text/html">
+	<h:head>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css" />
+		<link rel="stylesheet"
+			href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<link rel="shortcut icon" type="image/png"
+				href="#{request.contextPath}/resources/images/favicon32.png" />
+		</f:facet>
+
+		<link rel="shortcut icon" type="image/png"
+			href="#{request.contextPath}/resources/images/icons/favicon32.png" />
+		<title>iMediHubChat</title>
+
+		<script type="text/javascript">
+	function sub(){
+		var pname = location.pathname.split("/");
+
+		var username = document.getElementById("form:myusername");
+		var password = document.getElementById("form:mypassword");
+		
+		username.name = "myusername";
+		password.name = "mypassword";
+		
+		document.getElementById("form").action = "/"+pname[1]+"/login"
+		//alert("/"+pname[1]+"/j_spring_security_check");
+		//document.getElementById("form").action = "/HMS_POC01/j_spring_security_check";
+		
+		//if( (username.value != '') &amp;&amp; (password.value != '')){
+			document.getElementById("form").submit();
+		/* }else{
+			alert("Username/Password is missing");	
+			username.focus();
+			return false;
+		} */
+	}
+	
+</script>
+		<script>
+
+$(document).ready(function(){
+    $( "#forgotPWD").click(function(){
+    	$("#forgotPass").click();
+    });
+});
+
+$(window).unload(function() {
+    var currentURL = document.location.href;
+    var index = currentURL.indexOf("?error");
+    if(index > -1) {
+    	var username = document.getElementById("form:myusername");
+		var password = document.getElementById("form:mypassword");
+		if( username.value == '' &amp;&amp; password.value == ''){
+    		document.location.href = currentURL.substring(0, index);
+		}
+    }
+       
+});
+
+</script>
+
+	</h:head>
+
+	<h:body styleClass="newlogin-body">
+
+		<h:form id="form">
+			<div class="login-wrap">
+				<div class="ui-g ui-fluid">
+					<div class="ui-lg-12 ui-md-12 ui-g-12">
+						<div class="iMediHubLOGO hidden-xs">
+							<img alt="LOGO" src="#{request.contextPath}/resources/images/AspireWhite.png"
+								width="250" />
+						</div>
+						<div class="new-container">
+							<div class="ui-lg-5 ui-g-5 hidden-xs welcomeSection">
+								<div>
+									<div class="welcomeText">Welcome</div>
+									<div class="welImedi">to iMedihub Cloud Platform</div>
+								</div>
+								<div class="description">
+									<div>
+										<span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+										<span>Secure and reliable for users</span>
+									</div>
+									<div>
+										<span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+										<span>Works 15% faster than other rivals</span>
+									</div>
+									<div>
+										<span><i class="fa fa-check-circle" aria-hidden="true"></i></span>
+										<span>Easy access to Patient Portal</span>
+									</div>
+								</div>
+							</div>
+							<div class="ui-lg-6 ui-md-7 ui-g-12 loginSection">
+								<div class="title">
+									<img alt="LOGO" src="#{request.contextPath}/resources/images/AspireLIMSLogo1.png" />
+								</div>
+
+								<div class="ui-g-12">
+									<p:inputText id="myusername" required="true" styleClass="pad1"
+										placeholder="Username" />
+								</div>
+
+								<div class="ui-g-12">
+									<p:password id="mypassword" styleClass="pad1"
+										placeholder="Password" />
+									<div class="loginErrorBlock fsize">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
+								</div>
+
+								<div class="ui-g-12 signedIn">
+									<!-- 	<a id="forgotPWD"
+										href="#{request.contextPath}/Comm_ForgotPassword.xhtml">Forgot
+										Password?</a> -->
+									<p:commandLink action="Comm_ForgotPassword?faces-redirect=true"
+										value="ForgotPassword"
+										></p:commandLink>
+								</div>
+
+								<div class="ui-g-12">
+									<p:commandButton value="LOG IN" onclick="javascript:sub()"
+										process="@this" update="@this"
+										onstart="PF('loaderDialog').show()"
+										onsuccess="PF('loaderDialog').hide()" />
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="ui-g-12 LoginFooter">For any Technical Support,
+					Please Call &#160;+91-9391274727</div>
+			</div>
+
+			<p:dialog widgetVar="loaderDialog" styleClass="loaderGif"
+				style="background:none;box-shadow:none;border:medium none;"
+				modal="true" responsive="true" position="center" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage value="#{request.contextPath}/resources/images/preloader.gif" width="100"
+					height="100" />
+			</p:dialog>
+		</h:form>
+		<h:outputStylesheet name="css/layout.css" />
+		
+
+	</h:body>
+</f:view>
+
+</html>

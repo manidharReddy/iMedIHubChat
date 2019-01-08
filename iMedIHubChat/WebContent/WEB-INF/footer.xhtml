@@ -1,0 +1,71 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <style>
+    .company_dtls{
+    margin-top: -10px;}
+    
+    .prdt_frm{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    font-size: 12px;
+    opacity: 0.8;}
+    
+    .cmpny_name{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    font-weight:bold;
+    font-family: muli;
+    font-size: 13px !important;
+    opacity: 0.8;}
+    
+    .lst_vstd{
+    text-align: right;
+    margin-left: -10px;
+    color: rgba(255, 255, 255, 1);
+    margin-top: -4px;
+    font-size: 12px;
+    opacity: 0.8;}
+    
+    </style>
+    
+    <div class="ui-g-12 footer mbl-resposve-ftr">
+    
+    <div class="ui-g-6 company_dtls">
+
+           		<span class="floatLeft fontSize14"></span>
+           		<a class="prdt_frm" href="http://www.ecoihub.com" target="_new">A Product From </a><a class="cmpny_name"> iHub Technologies Pvt.LTD.</a>
+           		<span class="fa fa-copyright prdt_frm"></span> <span class="prdt_frm">2018, All rights reserved.</span>
+           		
+           		<span class="fontSize14 prdt_frm">Version iMediHubChat.1.0.0</span>
+           		
+    </div>
+           		
+           		 <div class="ui-g-4 lst_vstd">
+           		<span>Last Visited: <p:outputLabel value="First Time Login"
+						/> <h:outputText
+						value="09Dec1977"
+						
+						>
+						<!-- <p:outputLabel value="First Time Login"
+						rendered="#{empty loggedUser.user.lastLogin}" /> <h:outputText
+						value="#{loggedUser.user.lastLogin}"
+						rendered="#{not empty loggedUser.user.lastLogin}"
+						>
+						<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a" timeZone="IST" />
+						 -->
+					</h:outputText>
+				</span>
+				</div>
+				
+					<div style="clear: both" />
+					
+				
+				
+				
+            </div>
+</ui:composition>

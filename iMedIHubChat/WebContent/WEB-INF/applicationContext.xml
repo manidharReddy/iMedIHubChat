@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd 
+						http://www.springframework.org/schema/context  
+						http://www.springframework.org/schema/context/spring-context.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/security
+          				http://www.springframework.org/schema/security/spring-security.xsd ">
+						
+	<!-- Enable Spring Annotation Configuration -->
+	<context:annotation-config />
+	<!-- Scan for all of Spring components such as Spring Service -->
+	
+	<context:component-scan base-package="com.chat.dao" />
+	<context:component-scan base-package="com.chat.service" />
+	<context:component-scan base-package="com.chat.utility" />
+	
+	<!-- 
+	<context:component-scan base-package="com.ihub.lims.dao" />
+	<context:component-scan base-package="com.ihub.lims.service" />
+	<context:component-scan base-package="com.ihub.util" />
+		
+ -->
+	<!-- Create Data Source bean -->
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+ 
+
+		 	
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:8889/imediihubchatdb"/>
+		<property name="user" value="root"/>
+		<property name="password" value="root" />
+
+
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="20" />
+		<property name="maxIdleTime" value="20" />
+
+
+	</bean>
+ 
+ 
+	<!-- Define SessionFactory bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources">
+
+
+			<list>
+
+				<value>com/chat/mappings/UserInfoMapping.hbm.xml</value>
+				
+				
+				
+								
+				
+				
+			</list>
+		</property>
+		<property name="configLocation">
+			<value>classpath:com/ihub/config/hibernate.cfg.xml</value>
+		</property>
+	</bean>
+ 
+
+
+
+	<!-- Transaction Manager -->
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+ 
+
+	<!-- Detect @Transactional Annotation -->
+ 
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+
+
+ 
+	<!-- Spring Security -->
+	
+	<sec:http auto-config="true" use-expressions="true">
+		<sec:intercept-url pattern="/javax.faces.resource/**"
+			access="permitAll" />
+		<sec:intercept-url pattern="/resources/**" access="permitAll" />
+		<sec:intercept-url pattern="/rest/**" access="permitAll" />
+		<sec:intercept-url pattern="/Comm_ForgotPassword.xhtml"
+			access="permitAll" />
+		<sec:intercept-url pattern="/login*" access="permitAll" />
+		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
+
+		<sec:headers>
+			<sec:frame-options policy="SAMEORIGIN" />
+			<sec:cache-control />
+			<sec:hsts />
+		</sec:headers>
+
+		<sec:csrf disabled="true" />
+
+		<sec:form-login login-page="/login.xhtml"
+			default-target-url="/Chat.xhtml" always-use-default-target="true"
+			authentication-failure-url="/login.xhtml?error" username-parameter="myusername"
+			password-parameter="mypassword" />
+
+		<sec:logout logout-success-url="/login.xhtml?logout=1"
+			delete-cookies="JSESSIONID" invalidate-session="true" />
+
+
+	</sec:http>
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="customAuthentication">
+
+
+			<!-- // static authenticaation <sec:user-service > <sec:user name="admin" 
+				password="admin" authorities="ROLE_USER" /> </sec:user-service> -->
+ 
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+ 
+	<bean id="customAuthentication" class="com.ihub.security.CustomAuthenticationProvider" />
+<!-- 	
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+  -->
+		<!-- <property name="databaseType" value="mysql" /> -->
+		 
+	<!-- 	<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdate" value="true" />
+		 -->
+		<!-- <property name="deploymentResources" value="classpath*:diagrams/underwriting_queue.bpmn" 
+			/> <property name="history" value="audit" /> <property name="jobExecutorActivate" 
+			value="false" /> -->
+		<!-- <property name="customSessionFactories">
+			<list>
+				<bean class="com.ihub.activiti.test.CustomUserEntityManagerFactory">
+					<property name="loginDao" ref="loginDao" />
+				</bean>
+			</list>
+		</property> -->
+	<!-- <property name="mailServerHost" value="smtpout.secureserver.net" />
+	<property name="mailServerPort" value="80" />
+	<property name="mailServerUseSSL" value="true" />
+	<property name="mailServerUseTLS" value="true" />
+	<property name="mailServerDefaultFrom" value="no-reply@ecoihub.com" />
+	<property name="mailServerUsername" value="no-reply@ecoihub.com" />
+	<property name="mailServerPassword" value="welcome@ihub" /> -->
+	<!-- <property name="deploymentResources"
+            value="classpath*:Test (1).bpmn" />
+            <property name="jobExecutorActivate" value="false" /> -->
+<!-- </bean> -->
+
+
+
+	
+	<!-- <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+		<bean id="formService" factory-bean="processEngine"
+	factory-method="getFormService" />
+<bean id="taskFormData" factory-bean="processEngine"
+	factory-method="getFormService" />
+	 -->
+
+	<!-- <bean id="activitiLoginHandler"
+		class="org.activiti.custom.explorer.ui.login.CustomDefaultLoginHandler">
+		<property name="identityService" ref="identityService" />
+		<property name="currentUserService" ref="currentUserService" />
+		</bean>
+		
+		 <bean id="loginDao" class="com.ihub.lims.dao.LoginDao" />
+
+	<bean id="currentUserService"
+		class="org.activiti.custom.security.impl.CurrentUserServiceStaticImpl" />
+ 
+
+ -->
+
+	
+
+
+</beans>

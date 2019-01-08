@@ -1,0 +1,137 @@
+/* print css start 3bu1 & pardhu */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 10px !important;
+	font: inherit;
+	/* vertical-align: baseline; */
+	font-family: "latoregular","Trebuchet MS",Arial,Helvetica,sans-serif;
+	
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.backgroundImage {
+	width: 8.27in;
+	height: 11.69in;
+	position: absolute;
+	background-size: cover;
+}
+/* @page {
+	size: 8.27in 11.69in;
+	margin: 70pt 60pt 0pt;
+} */
+/* @page{
+margin-right: 8px;
+} */
+
+ /* thead{
+	border-bottom: 2px solid #000 !important;
+    border-top: 2px solid #000 !important;
+}  */
+.amtDtls thead{
+	border-bottom: 0px !important;
+    border-top: 0px !important;
+}
+table,thead,tbody,tfoot,td, th, tr{
+	border:0 ;	
+} 
+table,tbody,tfoot,td, th{
+border:none !important;	
+} 
+table,thead,tbody,tfoot{
+margin:0px 5px;
+}
+.ui-widget-content {
+	border: 0px;
+}
+
+
+
+.ui-datatable th.ui-state-default {
+    background: none; 
+    border-color: none;
+    font-size: 12px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    color: #000;
+    }
+    .ui-datatable-odd {
+    background-color: #fff !important; 
+}
+.ui-datatable tbody>tr.ui-widget-content {
+    border-color: none;
+}
+.ui-datatable th {
+    /* text-decoration: underline; */
+   /*  text-align: left; */
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    border-width: 0px;
+}
+.details p{
+	margin: 0px 0px;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    padding: 2px 0px;
+}
+.ui-datatable th.ui-state-default {
+	text-align: left;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+.ui-datatable-tablewrapper {
+overflow: hidden !important;
+}
+.ui-widget-content{
+background: none;}
+
+/* .dayBookDT .ui-datatable-sticky thead span{
+	margin-left: -5px;
+} */
+
+.ui-datatable-sticky{
+	background: #fff;
+}
+@media print {
+ .dayBookDT .ui-datatable-sticky{
+	display: none !important;
+}
+
+}

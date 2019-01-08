@@ -1,0 +1,164 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/omega">
+	
+	<div class="sidebar">
+		<div class="nano">
+			<div class="nano-content sidebar-scroll-content">
+				<div class="logo">
+					<p:graphicImage name="images/IMediHub New Logo.png" width="150"
+						style="margin-top:-10px;" />
+				</div>
+
+				<div class="profile" style="text-align: right;">
+					<a id="profile-button" href="#"> <span class="username">
+							<h:outputText style="padding-bottom:9px;" />
+					</span> <i class="fa fa-fw fa-cog set_iconn"></i>
+					</a>
+
+					<ul>
+						<li><a href=""><i
+								class="fa fa-fw fa-sign-out"></i><span>Logout</span></a></li>
+						<h:form>
+							<div class="menu">
+								<po:menu>
+									<p:menuitem id="changepwd" value="Change Password"
+										icon="fa_size fa fa-exchange"
+										
+										ajax="false" />
+
+									<p:menuitem id="profile" value="Employee Profile"
+										icon="fa_size fa fa-user-circle"
+										
+										ajax="false" />
+
+								</po:menu>
+							</div>
+						</h:form>
+					</ul>
+				</div>
+
+				<div class="profile1" style="padding: 10px;">
+					<p:graphicImage value="resources/images/man(1).png" cache="false"
+						/>
+					
+					<div class="designation_lname">
+						<span class="username"> <h:outputText
+								value="#{chatterBoxBean.user.userregistration.userfirstname} #{chatterBoxBean.user.userregistration.userlastname}" />
+						</span>
+						<div>
+							<span class="username"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="menuSide">
+					<input id="sideBarSearch" type="text" placeholder="Quick Search"
+						style="-webkit-text-fill-color: #fff;" class="searchInput" />
+					<h:graphicImage name="images/zoom1.svg" />
+				</div>
+
+				<div class="menu">
+					<h:form>
+						<po:menu>
+							<p:menuitem id="pat1" value="Raju"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+                            <p:menuitem id="pat2" value="Surya"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								<p:menuitem id="pat3" value="Nagaraju"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat4" value="Teja"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat5" value="Harish"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat6" value="Shahed"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat7" value="Dhiraj"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat8" value="Arif"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat9" value="Bheema"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat10" value="Jakheer"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat11" value="Baluu"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat12" value="Arya"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat13" value="Kiran"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat14" value="Kumar"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat15" value="Ganesh"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+								<p:menuitem id="pat16" value="Venkat"
+								icon="fa fa-home icn_clr"
+								
+								ajax="false" />
+								
+
+							
+
+						</po:menu>
+						<!-- <ul>
+
+
+							<li><a target="_blank"
+								href="#{request.contextPath}/index.xhtml"
+								style="border-top: none;"> <i
+									class="fa fa-file-text-o smrt_frms_ico icn_clr"></i><span
+									style="margin-left: 0.7em;">Smart Forms</span></a></li>
+						</ul> -->
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>
