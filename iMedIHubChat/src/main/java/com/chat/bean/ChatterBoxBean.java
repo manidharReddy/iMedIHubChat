@@ -54,6 +54,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.hibernate.hql.internal.ast.tree.FromReferenceNode;
 import org.primefaces.PrimeFaces;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
@@ -202,7 +203,7 @@ public void disconnectMqtt() {
 	}
 }
 public void sendMessage(ActionEvent action) {
-	
+	callerIdentifier = generateRandomNumbers();
 	System.out.println("messages object before:"+messages);
 	//if(messages==null) {
 	
@@ -215,7 +216,7 @@ public void sendMessage(ActionEvent action) {
 	msg.setMessageType("text");
 	
 	msg.setTopicName(topicName);
-	
+	msg.setMsgId(String.valueOf(callerIdentifier));
 	//msg.setUserId(String.valueOf(user.getUserId()));
 	msg.setFromUserId(String.valueOf(user.getUserId()));
 	msg.setUserType(UserTypeUtility.Owner);
@@ -341,7 +342,7 @@ public void deliveryComplete(IMqttDeliveryToken arg0) {
 	System.out.println("Succefluyy sended");
 	//updateOpenChats();
 }
-/*
+
 public void isRecieverRecievedMessage() {
 	recievedMsg = true;
 	if(formRefresh) {
@@ -353,7 +354,7 @@ public void isRecieverRecievedMessage() {
 	}
 
 }
-*/
+
 public void makeAudioCallAction(ActionEvent actionEvent) {
 	callerIdentifier = generateRandomNumbers();
 Message makeCallMsg = new Message();
@@ -368,6 +369,7 @@ Message makeCallMsg = new Message();
     makeCallMsg.setUsername(selectedUser.getUserregistration().getUserfirstname()+""+selectedUser.getUserregistration().getUserlastname());
     makeCallMsg.setUsrType("Owner");
     makeCallMsg.setMessageType("audio");
+    makeCallMsg.setMsgType(MessageTypeUtility.audio);
     makeCallMsg.setMsgId(String.valueOf(callerIdentifier));
     messages.add(makeCallMsg);
     //isIncomingCall = true;
@@ -406,6 +408,7 @@ public void makeCallAction(ActionEvent actionEvent) {
     makeCallMsg.setUsrType("Owner");
     makeCallMsg.setMessageType("video");
     makeCallMsg.setMsgId(String.valueOf(callerIdentifier));
+    makeCallMsg.setMsgType(MessageTypeUtility.video);
     messages.add(makeCallMsg);
     //isIncomingCall = true;
 selectedUserTopic.getMessages().add(makeCallMsg);
@@ -503,10 +506,10 @@ public Message createMessage() {
 public void liftCallButton(ActionEvent actionEvent) {
 	//makeCallAction(actionEvent);
 	Message msg = messages.last();
-	if(msg.getMessageType().equalsIgnoreCase("video")) {
+	if(MessageTypeUtility.video.name().equalsIgnoreCase(msg.getMsgType().name())) {
 		videoCallOn = true;
 		audioCall = false;
-	}else if(msg.getMessageType().equalsIgnoreCase("audio")) {
+	}else if(MessageTypeUtility.audio.name().equalsIgnoreCase(msg.getMsgType().name())) {
 		videoCallOn = false;
 		audioCall = true;
 	}
@@ -544,11 +547,38 @@ public void messageArrived(String arg0, MqttMessage arg1) throws Exception {
 	if(msg.getToUserId().equalsIgnoreCase(String.valueOf(user.getUserId()))) {
 		msg.setUserType(UserTypeUtility.Reciever);
 		//msg.setMsgType(MessageTypeUtility.text);
-		
-			 if((msg.getFromUserId().equalsIgnoreCase(String.valueOf(selectedUserTopic.getLoggedUser().getUserId()))) || (msg.getFromUserId().equalsIgnoreCase(String.valueOf(selectedUserTopic.getChatUser().getUserId())))) {
+		msg.setUsermsgID(0);
+			// if((msg.getFromUserId().equalsIgnoreCase(String.valueOf(selectedUserTopic.getLoggedUser().getUserId()))) || (msg.getFromUserId().equalsIgnoreCase(String.valueOf(selectedUserTopic.getChatUser().getUserId())))) {
 	    		System.out.println("if mesage added to set");
-				 messages.add(msg);
 				 
+	    		msg.setCreatedOn(new Date());
+	    	    
+	    	    msg.setMsgDate(formatter.format(new Date()));
+	    	   	    		messages.add(msg);
+				 selectedUserTopic.getMessages().add(msg);
+					
+					//System.out.println("msg id:"+msg.getUsermsgID());
+					
+					//messageService.saveUserChatUsingTopic(selectedUserTopic);
+					
+					callerIdentifier = (int)Integer.valueOf(msg.getMsgId());
+					System.out.println("callerid:"+callerIdentifier);
+					System.out.println("msgTypeCheck:"+msg.getMsgType().toString());
+					if(MessageTypeUtility.video.name().equalsIgnoreCase(msg.getMsgType().name())) {
+						System.out.println("msgTypeCheck videoooo:");
+						incomingCall = true;
+						ringingCall = true;
+						formRefresh = true;
+						
+					}else if(MessageTypeUtility.audio.name().equalsIgnoreCase(msg.getMsgType().name())) {
+						System.out.println("msgTypeCheck audiooooo:");
+						incomingCall = true;
+						ringingCall = true;
+						formRefresh = true;
+					}
+					
+					/*
+					
 				if(msg.getMessageType().equalsIgnoreCase("video")) {
 					incomingCall = true;
 					ringingCall = true;
@@ -567,8 +597,9 @@ public void messageArrived(String arg0, MqttMessage arg1) throws Exception {
 					   
 					Files.write(fileP, msg.getContent().getBytes());
 				}
+				*/
 				recievedMsg = true;
-	    	 } 
+	    	// } 
 			 
 	    	 return;
 	     //}

@@ -83,128 +83,84 @@
 	<h:form id="form">
 	
 	<p:growl id="msgs" showDetail="true" />
-<p:layout style="min-width:400px;min-height:600px;">
-<p:layoutUnit position="west" resizable="true" size="100" minSize="350" maxSize="600" >
-        <p:dataTable id="singleDT" var="topic" value="#{chatterBoxBean.userstopiclist}" selectionMode="single" selection="#{chatterBoxBean.selectedUserTopic}" rowKey="#{topic.topicid}">
+  <p:layout style="min-width:400px;min-height:600px;">
+    <p:layoutUnit position="west" resizable="true" size="100" minSize="350" maxSize="600" >
+     <p:dataTable id="singleDT" var="topic" value="#{chatterBoxBean.userstopiclist}" selectionMode="single" selection="#{chatterBoxBean.selectedUserTopic}" rowKey="#{topic.topicid}">
         <p:ajax event="rowSelect" listener="#{chatterBoxBean.onRowSelect}" update=":form:msgs" />
-        <p:column headerText="Open Chats">
-        
-        <h:outputText value="#{topic.loggedUser.userregistration.userfirstname} #{topic.loggedUser.userregistration.userlastname}" rendered="#{topic.loggedUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;margin-left:10px"/>
-        <h:outputText value="#{topic.chatUser.userregistration.userfirstname} #{topic.chatUser.userregistration.userlastname}" rendered="#{topic.chatUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;margin-left:10px"/>
-        
-        <p:graphicImage value="resources/images/man(1).png" cache="false"
+       <p:column headerText="Open Chats">
+          <h:outputText value="#{topic.loggedUser.userregistration.userfirstname} #{topic.loggedUser.userregistration.userlastname}" rendered="#{topic.loggedUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;margin-left:10px"/>
+          <h:outputText value="#{topic.chatUser.userregistration.userfirstname} #{topic.chatUser.userregistration.userlastname}" rendered="#{topic.chatUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;margin-left:10px"/>
+           <p:graphicImage value="resources/images/man(1).png" cache="false"
 						 style="float:left"/>
 						 <br>
 						 </br>
 						 
-		<h:outputText value="#{chatterBoxBean.getUserLastMessage().content}" rendered="#{topic.topicid == chatterBoxBean.selectedUserTopic.topicid}"  style="font-family: Arial, Helvetica, sans-serif;margin-left:10px"/>
-		<h:outputText value="#{chatterBoxBean.getUserLastMessage().getMsgDate()}" rendered="#{topic.topicid == chatterBoxBean.selectedUserTopic.topicid}"  style="font-family: Arial, Helvetica, sans-serif;float:right"/>
+		  <h:outputText value="#{chatterBoxBean.getUserLastMessage().content}" rendered="#{topic.topicid == chatterBoxBean.selectedUserTopic.topicid}"  style="font-family: Arial, Helvetica, sans-serif;margin-left:10px"/>
+		  <h:outputText value="#{chatterBoxBean.getUserLastMessage().getMsgDate()}" rendered="#{topic.topicid == chatterBoxBean.selectedUserTopic.topicid}"  style="font-family: Arial, Helvetica, sans-serif;float:right"/>
             
-        </p:column>
-        <f:facet name="footer">
-            
-        </f:facet>
+       </p:column>
+        <f:facet name="footer"/>
     </p:dataTable>
  
-    </p:layoutUnit>
+  </p:layoutUnit>
     <p:layoutUnit position="center" resizable="true" size="100" minSize="350" maxSize="600" >
- <p:scrollPanel mode="native" id="videoframeid" header="VideoCall" rendered="#{chatterBoxBean.videoCallOn}" width="600px" height="400px" footer="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}" >
-        
-           <iframe id="imagepgframe" name="imagepgframe" width="600px" height="400px" frameborder="0" scrolling="auto" src="https://appr.tc/r/#{chatterBoxBean.callerIdentifier}?audio=googNoiseReduction=false">
-             
-            </iframe>
-            
-            
-            
-        
-    </p:scrollPanel>
+          <p:scrollPanel mode="native" id="videoframeid" header="VideoCall" rendered="#{chatterBoxBean.videoCallOn}" width="600px" height="400px" footer="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}">
+           <iframe id="imagepgframe" name="imagepgframe" width="600px" height="400px" frameborder="0" scrolling="auto" src="https://appr.tc/r/#{chatterBoxBean.callerIdentifier}?audio=googNoiseReduction=false"/>
+         </p:scrollPanel>
  
- <p:scrollPanel mode="native" id="audioframeid" header="AudioCall" rendered="#{chatterBoxBean.audioCall}" width="600px" height="400px" footer="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}" >
-       
-           <iframe id="audioframe" name="imagepgframe" width="600px" height="400px" frameborder="0" scrolling="auto" src="https://appr.tc/r/#{chatterBoxBean.callerIdentifier}?audio=googNoiseReduction=false&amp;audio=true&amp;video=false">
-             
-            </iframe>
-            
-            
-            
-       
-    </p:scrollPanel>
+         <p:scrollPanel mode="native" id="audioframeid" header="AudioCall" rendered="#{chatterBoxBean.audioCall}" width="600px" height="400px" footer="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}">
+           <iframe id="audioframe" name="imagepgframe" width="600px" height="400px" frameborder="0" scrolling="auto" src="https://appr.tc/r/#{chatterBoxBean.callerIdentifier}?audio=googNoiseReduction=false&amp;audio=true&amp;video=false"/>
+        </p:scrollPanel>
  
  
- <p:panel id="phonecallid" rendered="#{chatterBoxBean.ringingCall}" header="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}"  style="margin-bottom:20px">
-        <h:panelGrid columns="2" cellpadding="10">
+        <p:panel id="phonecallid" rendered="#{chatterBoxBean.ringingCall}" header="#{chatterBoxBean.selectedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUser.userregistration.userlastname}"  style="margin-bottom:20px">
+         <h:panelGrid columns="2" cellpadding="10">
             <p:commandButton style="float:left" actionListener="#{chatterBoxBean.liftCallButton}" id="liftcall" process="@this" update="@form"  value = "List Call" />
             <p:commandButton style="float:right" actionListener="#{chatterBoxBean.endCallButton}" id="endiconOnly" process="@this" update="@form"  value = "End Call"/>
         </h:panelGrid>
     </p:panel>
- <p:media id="mediacallring"  rendered="#{chatterBoxBean.ringingCall}" value="resources/New_Nokia.mp3" width="200" height="20" player="quicktime" style="visibility: hidden;">
-    <f:param name="autoPlay" value="false" />
-</p:media>
+        <p:media id="mediacallring"  rendered="#{chatterBoxBean.ringingCall}" value="resources/New_Nokia.mp3" width="200" height="20" player="quicktime" style="visibility: hidden;">
+        <f:param name="autoPlay" value="false" />
+       </p:media>
  
- 
- 
- <p:dataTable var="msgobj" value="#{chatterBoxBean.messages}" rendered="#{!chatterBoxBean.incomingCall}" id="msglistid" scrollable="true" scrollHeight="250">
+      <p:dataTable var="msgobj" value="#{chatterBoxBean.messages}" rendered="#{!chatterBoxBean.incomingCall}" id="msglistid" scrollable="true" scrollHeight="250">
         
-         <f:facet name="header">
-            <div style="height:50px !important">
-          
-          
+        <f:facet name="header">
+          <div style="height:50px !important">
           <h:outputText value="#{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userfirstname} #{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userlastname}" rendered="#{chatterBoxBean.selectedUserTopic.chatUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;"/>
           <h:outputText value="#{chatterBoxBean.selectedUserTopic.loggedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUserTopic.loggedUser.userregistration.userlastname}" rendered="#{chatterBoxBean.selectedUserTopic.loggedUser.userId != chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold"/>
-         
-    
- <p:graphicImage value="resources/images/man(1).png" cache="false" style="max-width:50px;float:left"/>	
-	</div>
-	
-        </f:facet>
-   
-        
+          <p:graphicImage value="resources/images/man(1).png" cache="false" style="max-width:50px;float:left"/>	
+	    </div>
+      </f:facet>
         <p:column>
-        
-        
-        
-        
-        
         <div class="container">
-          
-          
-          <h:outputText value="Me" rendered="#{msgobj.fromUserId == chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold"/>
-          
-         <h:outputText value="#{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userfirstname} #{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userlastname}" rendered="#{msgobj.toUserId == chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;"/>
+          <h:outputText value="Me" rendered="#{msgobj.fromUserId == chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold"/>  
+          <h:outputText value="#{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userfirstname} #{chatterBoxBean.selectedUserTopic.chatUser.userregistration.userlastname}" rendered="#{msgobj.toUserId == chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;"/>
           <h:outputText value="#{chatterBoxBean.selectedUserTopic.loggedUser.userregistration.userfirstname} #{chatterBoxBean.selectedUserTopic.loggedUser.userregistration.userlastname}" rendered="#{msgobj.toUserId == chatterBoxBean.user.userId}" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold"/>
-         
+          <p:graphicImage value="resources/images/man(1).png" cache="false"/>
+          <br></br>
+          <p:outputLabel rendered="#{msgobj.messageType == 'text'}" value="&lt;br /&gt;#{msgobj.content}" escape="false"/>
+          <span class="time-right">#{msgobj.msgDate}</span>
+          <pe:documentViewer rendered="#{msgobj.messageType == 'pdf'}" id="documentViewId" height="100px" width="100px" url="#{chatterBoxBean.filepath}/#{msgobj.filename}.#{msgobj.messageType}"/>
     
- <p:graphicImage value="resources/images/man(1).png" cache="false"
-						/>
-  <br></br>
-  <p:outputLabel rendered="#{msgobj.messageType == 'text'}" value="&lt;br /&gt;#{msgobj.content}" escape="false"/>
-  <span class="time-right">#{msgobj.msgDate}</span>
-  <pe:documentViewer rendered="#{msgobj.messageType == 'pdf'}" id="documentViewId" height="100px" width="100px" url="#{chatterBoxBean.filepath}/#{msgobj.filename}.#{msgobj.messageType}"/>
-    
-</div>
-        </p:column>
-        </p:dataTable>
+        </div>
+       </p:column>
+     </p:dataTable>
       
 
-    <p:inputTextarea rendered="#{!chatterBoxBean.incomingCall}" value="#{chatterBoxBean.msgContent}" rows="5" cols="30"  maxlength="100"  autoResize="false" />
-   
-    <p:commandButton rendered="#{!chatterBoxBean.incomingCall}" value="Send" update="pollrefresh"  id="postmessage"  actionListener="#{chatterBoxBean.sendMessage}" styleClass="ui-priority-primary"  >
-   
-   
-    </p:commandButton>
-    
-    <p:commandButton actionListener="#{chatterBoxBean.makeCallAction}"  process="@this" update="@form" id="makeCallId"  value="Video Call"/>
-   <p:commandButton actionListener="#{chatterBoxBean.endCallButton}" process="@this" update="@form" id="endCallId" value="End" />
-    <p:commandButton actionListener="#{chatterBoxBean.makeAudioCallAction}" process="@this" update="@form" id="makeAudioCallId"  value="Audio Call"/>
-    <p:fileUpload fileUploadListener="#{chatterBoxBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+     <p:inputTextarea rendered="#{!chatterBoxBean.incomingCall}" value="#{chatterBoxBean.msgContent}" rows="5" cols="30"  maxlength="100"  autoResize="false" />
+     <p:commandButton rendered="#{!chatterBoxBean.incomingCall}" value="Send"   id="postmessage"  actionListener="#{chatterBoxBean.sendMessage}" styleClass="ui-priority-primary"/>
+     <p:commandButton actionListener="#{chatterBoxBean.makeCallAction}" rendered="#{!chatterBoxBean.incomingCall}"  process="@this" update="@form" id="makeCallId"  value="Video Call"/>
+     <p:commandButton actionListener="#{chatterBoxBean.endCallButton}" rendered="#{chatterBoxBean.incomingCall}" process="@this" update="@form" id="endCallId" value="End" />
+     <p:commandButton actionListener="#{chatterBoxBean.makeAudioCallAction}" rendered="#{!chatterBoxBean.incomingCall}" process="@this" update="@form" id="makeAudioCallId"  value="Audio Call"/>
+     <p:fileUpload fileUploadListener="#{chatterBoxBean.handleFileUpload}" rendered="#{!chatterBoxBean.incomingCall}" mode="advanced" dragDropSupport="true"
                           update="msgs"  allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" />
-    </p:layoutUnit>
-    </p:layout>
+     </p:layoutUnit>
+  </p:layout>
         
-     <p:poll id="pollrefresh" interval="2"  oncomplete="scrollToBottom()"   update="singleDT msglistid phonecallid mediacallring" />
+     <p:poll id="pollrefresh" interval="2" rendered="#{chatterBoxBean.recievedMsg}" oncomplete="scrollToBottom()" listener="#{chatterBoxBean.isRecieverRecievedMessage}"  update="singleDT msglistid phonecallid mediacallring" />
       
-      
-	</h:form>
+ </h:form>
 
 </ui:define>
 </ui:composition>

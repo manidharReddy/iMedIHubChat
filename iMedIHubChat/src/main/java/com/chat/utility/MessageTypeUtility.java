@@ -8,5 +8,5 @@ package com.chat.utility;
  *
  */
 public enum MessageTypeUtility {
-	text,image
+	text,image,video,audio,file
 }
