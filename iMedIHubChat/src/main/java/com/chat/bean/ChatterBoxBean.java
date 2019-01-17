@@ -131,9 +131,6 @@ public void init() {
 			mapOfUserTopic.put(topic.getLoggedUser().getUserId(), topic);
 			}
 	}
-	
-	
-	
 	//System.out.println("selectedUser Object:"+selectedUser);
 	recievedMsg = true;
 	incomingCall = false;
@@ -148,11 +145,8 @@ public void init() {
 		selectChat(selectedUserTopic);
 		
 		
-	}
-	
-	
-	}
-	
+	}	
+  }
 }
 
 //public void connectToMqtt(ActionEvent action) {
@@ -354,10 +348,15 @@ public void isRecieverRecievedMessage() {
 	}
 
 }
-
+/*
+ * @Author:Manidhar Reddy
+ * @Param:audio call button action event
+ * @Description:Make a audio call to selected user based on topicname
+ * @Exception: Making a audio call failed
+ */
 public void makeAudioCallAction(ActionEvent actionEvent) {
 	callerIdentifier = generateRandomNumbers();
-Message makeCallMsg = new Message();
+    Message makeCallMsg = new Message();
     
     makeCallMsg.setCreatedOn(new Date());
     makeCallMsg.setFromUserId(String.valueOf(user.getUserId()));
@@ -372,11 +371,8 @@ Message makeCallMsg = new Message();
     makeCallMsg.setMsgType(MessageTypeUtility.audio);
     makeCallMsg.setMsgId(String.valueOf(callerIdentifier));
     messages.add(makeCallMsg);
-    //isIncomingCall = true;
-selectedUserTopic.getMessages().add(makeCallMsg);
-	
-	
-
+    
+    selectedUserTopic.getMessages().add(makeCallMsg);
 	messageService.saveUserChatUsingTopic(selectedUserTopic);
 	//updateOpenChats();
 	if(mqttService.publishMessage(mqttClient, topicName, makeCallMsg)) {
@@ -388,10 +384,16 @@ selectedUserTopic.getMessages().add(makeCallMsg);
 		//return;
 	
 	}else {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("video Msg Failed to send", ""));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Making a audio call failed", ""));
 	}
 
 }
+/*
+ * @Author:Manidhar Reddy
+ * @Param:audio call button action event
+ * @Description:Make a Video call to selected user based on topicname
+ * @Exception: Making a Video call failed
+ */
 
 public void makeCallAction(ActionEvent actionEvent) {
 	callerIdentifier = generateRandomNumbers();
@@ -431,6 +433,14 @@ selectedUserTopic.getMessages().add(makeCallMsg);
     
 
 }
+
+/*
+ * @Author:Manidhar Reddy
+ * @Param:FileUploadEvent event
+ * @Description:Send a file in message
+ * @Exception: File not send
+ */
+
 public void handleFileUpload(FileUploadEvent event) {
     
    try {
@@ -455,13 +465,14 @@ public void handleFileUpload(FileUploadEvent event) {
        String binaryFileString = new String(IOUtils.readFully(iis, iis.available()));
        //String binaryFileString = Base64.getEncoder().encodeToString(IOUtils.toByteArray(iis)); 
        System.out.println("binary pdf:"+binaryFileString);
-     iis.close();
-     FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-     FacesContext.getCurrentInstance().addMessage(null, message);
-    Message msg = createMessage();
-    
-    msg.setCreatedOn(new Date());
-    msg.setFromUserId(String.valueOf(user.getUserId()));
+       iis.close();
+   
+   FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+   FacesContext.getCurrentInstance().addMessage(null, message);
+   
+   Message msg = createMessage();
+   msg.setCreatedOn(new Date());
+   msg.setFromUserId(String.valueOf(user.getUserId()));
    msg.setMsgDate(formatter.format(new Date()));
    msg.setTopicName(selectedUserTopic.getTopicname());
    msg.setToUserId(String.valueOf(selectedUser.getUserId()));
@@ -484,7 +495,7 @@ public void handleFileUpload(FileUploadEvent event) {
 		//return;
 	
 	}else {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("video Msg Failed to send", ""));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("File upload failed to send", ""));
 	}
 
    
@@ -502,9 +513,14 @@ public void handleFileUpload(FileUploadEvent event) {
 public Message createMessage() {
 	return new Message();
 }
+/*
+ * @Author:Manidhar Reddy
+ * @Param:liftCall button event
+ * @Description:Lifiting recieved call
+ * 
+ */
 
 public void liftCallButton(ActionEvent actionEvent) {
-	//makeCallAction(actionEvent);
 	Message msg = messages.last();
 	if(MessageTypeUtility.video.name().equalsIgnoreCase(msg.getMsgType().name())) {
 		videoCallOn = true;
@@ -515,14 +531,28 @@ public void liftCallButton(ActionEvent actionEvent) {
 	}
 	
 	ringingCall = false;
-	//incomingCall = false;
 }
+/*
+ * @Author:Manidhar Reddy
+ * @Param:ActionEvent for ending a call
+ * @Description:Disconnecting recieving call
+ * 
+ */
+
 public void endCallButton(ActionEvent actionEvent) {
 	incomingCall = false;
 	videoCallOn = false;
 	audioCall = false;
 	ringingCall = false;
 }
+
+/*
+ * @Author:Manidhar Reddy
+ * @Param:Topic name(arg0),Body of the mqttMessage(arg1)
+ * @Description:Receiveing subscribed topic messages
+ * @Exception: MqttException
+ */
+
 @Override
 public void messageArrived(String arg0, MqttMessage arg1) throws Exception {
 	// TODO Auto-generated method stub
